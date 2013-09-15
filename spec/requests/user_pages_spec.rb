@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe "UserPages" do
-  subject { page }
+	subject { page }
 
-  describe "index" do
+	describe "index" do
       let(:user) { FactoryGirl.create(:user) }
   		before(:each) do
   			sign_in user
@@ -13,22 +13,19 @@ describe "UserPages" do
   		it { should have_title('All users') }
   		it { should have_content('All users') }
 
-      describe "pagination" do
+    	describe "pagination" do
 
-        before(:all) { 30.times { FactoryGirl.create(:user) } }
-        after(:all) { User.delete_all }
+	        before(:all) { 30.times { FactoryGirl.create(:user) } }
+	        after(:all) { User.delete_all }
 
-        it { should have_selector('div.pagination') }
+	        it { should have_selector('div.pagination') }
 
-        it "should list each user" do
+	        it "should list each user" do
     			User.paginate(page: 1).each do |user|
     				expect(page).to have_selector('li', text: user.name)
-          end
-  			end
-  		end
-  	
-
-  	
+    			end
+        	end
+		end
 
 	  	describe "delete links" do
 
@@ -50,7 +47,6 @@ describe "UserPages" do
 	  			end
 	  			it { should_not have_link('delete', href: users_path(admin)) }
 	  		end
-
 	  	end
 	end
 
@@ -79,7 +75,9 @@ describe "UserPages" do
 			it { should have_content(m1.content) }
 			it { should have_content(m2.content) }
 			it { should have_content(user.microposts.count) }
+			it { should_not have_content("delete")}
 		end
+
 	end
 
 	describe "edit" do
